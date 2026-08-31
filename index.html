@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小恐龍的機率大冒險 - 15堂大師課</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f0fdf4; /* Light green background */
+            color: #1f2937;
+            scroll-behavior: smooth;
+        }
+
+        /* Card Styles */
+        .knowledge-card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+            overflow: hidden;
+            border-top: 6px solid #22c55e;
+            transition: transform 0.3s ease;
+        }
+        
+        .knowledge-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            background: linear-gradient(to right, #f0fdf4, #ffffff);
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #f3f4f6;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .card-number {
+            background-color: #22c55e;
+            color: white;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: 900;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        /* Utility Animations */
+        .bounce { animation: bounce 2s infinite; }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .pulse-slow { animation: pulse 3s infinite; }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .progress-bar { transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        /* Navigation Dots */
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #d1d5db;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 8px 0;
+        }
+        .nav-dot.active {
+            background-color: #22c55e;
+            transform: scale(1.5);
+        }
+        .nav-dot:hover { background-color: #4ade80; }
+        
+        .tooltip {
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        .nav-dot-container:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="min-h-screen relative">
+
+    <div class="fixed right-4 top-1/2 transform -translate-y-1/2 z-50 hidden lg:block bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-lg border border-gray-100">
+        <div class="flex flex-col items-center gap-1">
+            <!-- JS will generate dots here -->
+            <div id="dot-nav-container"></div>
+        </div>
+    </div>
+
+    <div class="max-w-5xl mx-auto px-4 py-12">
+        
+        <!-- 第 1 張：首頁 -->
+        <header id="card-1" class="text-center mb-16 pt-8 knowledge-card border-none bg-transparent shadow-none hover:transform-none">
+            <h1 class="text-5xl md:text-6xl font-black text-green-700 mb-6 drop-shadow-sm">
+                <i class="fa-solid fa-dragon text-green-500 mr-2 bounce inline-block"></i>
+                小恐龍的機率大冒險
+            </h1>
+            <p class="text-xl text-gray-600 font-bold bg-white inline-block px-6 py-3 rounded-full shadow-md">
+                15張卡片 ✕ 互動遊戲 ✕ 考古題實戰 ＝ 輕鬆搞懂機器學習三大機率模型！
+            </p>
+        </header>
+
+        <!-- ========================================== -->
+        <!-- MODULE 1: MONTE CARLO -->
+        <!-- ========================================== -->
+
+        <!-- 第 2 張：蒙地卡羅 小遊戲 -->
+        <section id="card-2" class="knowledge-card border-t-blue-500" data-title="蒙地卡羅-小遊戲">
+            <div class="card-header">
+                <div class="card-number bg-blue-500">2</div>
+                <h2 class="text-2xl font-black text-blue-800">關卡一：蒙地卡羅方法 (遊戲篇)</h2>
+            </div>
+            <div class="p-6 md:p-8 flex flex-col md:flex-row gap-8">
+                <div class="flex-1">
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg mb-6 text-sm text-blue-800 shadow-sm">
+                        <strong>小恐龍語錄：</strong>「我數學不好，不會算圓形的面積。但我只要閉著眼睛一直丟石頭，看有幾顆砸中圓形肉餅，用比例猜一下就知道它有多大啦！」
+                    </div>
+                    <p class="text-gray-700 mb-4 leading-relaxed">我們要在一個面積為 4 的正方形中，畫一個面積為 π 的圓形。隨機投入飛鏢，<span class="text-red-500 font-bold">落在圓內</span>的機率會接近 $\frac{\pi}{4}$。試著丟越多次，看看估算出的圓周率會不會越準！</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <button onclick="throwDarts(10)" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors">丟 10 顆</button>
+                        <button onclick="throwDarts(1000)" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors">丟 1000 顆</button>
+                        <button onclick="throwDarts(10000)" class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors">丟 10000 顆</button>
+                        <button onclick="resetMC()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg transition-colors">重置</button>
+                    </div>
+
+                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div>
+                                <div class="text-sm text-gray-500">總投擲數</div>
+                                <div class="text-2xl font-black text-gray-800" id="mc-total">0</div>
+                            </div>
+                            <div>
+                                <div class="text-sm text-gray-500">估算圓周率 (π)</div>
+                                <div class="text-2xl font-black text-blue-600" id="mc-pi">0.0000</div>
+                                <div class="text-xs text-gray-400 mt-1">真實值: 3.14159...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 flex justify-center items-center bg-gray-50 rounded-2xl p-4 border-2 border-gray-100">
+                    <canvas id="mc-canvas" width="300" height="300" class="bg-white rounded-xl shadow-inner"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第 3 張：蒙地卡羅 正式定義 -->
+        <section id="card-3" class="knowledge-card border-t-blue-500" data-title="蒙地卡羅-定義">
+            <div class="card-header">
+                <div class="card-number bg-blue-500">3</div>
+                <h2 class="text-2xl font-black text-blue-800">學術殿堂：蒙地卡羅正式定義</h2>
+            </div>
+            <div class="p-6 md:p-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-3"><i class="fa-solid fa-book-open text-blue-500 mr-2"></i>核心精神：用「隨機」解決「確定」的問題</h3>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    蒙地卡羅方法（Monte Carlo Method）是一類依靠<strong>重複隨機抽樣</strong>來獲得數值結果的計算演算法。當問題過於複雜，無法用解析解（Analytical Solution，即直接套公式）求得精確答案時，我們就會透過大量模擬來逼近真實值。
+                </p>
+                <div class="bg-blue-50 p-6 rounded-xl border border-blue-100 mb-4">
+                    <h4 class="font-bold text-blue-800 mb-2">數學定義與大數法則</h4>
+                    <p class="text-gray-700 text-sm mb-4">假設我們想計算函數 $f(x)$ 的期望值或積分，我們可以從機率分佈 $P(x)$ 中隨機抽取 $N$ 個樣本 $x_1, x_2, ..., x_N$：</p>
+                    <div class="text-center text-lg overflow-x-auto pb-2">
+                        $$ E[f(x)] = \int f(x)P(x)dx \approx \frac{1}{N} \sum_{i=1}^{N} f(x_i) $$
+                    </div>
+                    <p class="text-gray-600 text-sm mt-2"><i class="fa-solid fa-circle-info mr-1"></i> 根據<strong>大數法則 (Law of Large Numbers)</strong>，當抽樣次數 $N \to \infty$ 時，這個平均值會收斂到真實的期望值。</p>
+                </div>
+                <p class="text-gray-700 font-bold">常見應用：<span class="font-normal">金融風險評估、天氣預報模擬、強化學習中的狀態價值估算、複雜積分計算。</span></p>
+            </div>
+        </section>
+
+        <!-- 第 4 張：蒙地卡羅 考古題 1 -->
+        <section id="card-4" class="knowledge-card border-t-blue-500" data-title="蒙地卡羅-實戰1">
+            <div class="card-header bg-gray-50">
+                <div class="card-number bg-blue-500">4</div>
+                <h2 class="text-2xl font-black text-gray-800">實戰演練：114年 AI規劃師中級 (Q23)</h2>
+                <span class="ml-auto bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded">考古題</span>
+            </div>
+            <div class="p-6 md:p-8">
+                <div class="mb-6 p-5 border-2 border-dashed border-gray-300 rounded-xl bg-white">
+                    <p class="text-lg text-gray-800 mb-4 font-medium leading-relaxed">
+                        一家再生能源公司希望預測未來三個月太陽能發電量的波動範圍。由於氣候條件具有高度隨機性，且輸入變數（如日照時數、雲量、溫度）之間存在不確定關係，工程團隊決定以<span class="bg-yellow-200 px-1 font-bold">隨機抽樣方式模擬多種可能情境</span>，以估算整體發電量的機率分佈與風險區間。請問此時所採用的技術最符合下列哪一種方法？
+                    </p>
+                    <ul class="space-y-2 text-gray-700">
+                        <li class="p-3 rounded-lg border-2 border-blue-500 bg-blue-50 font-bold text-blue-800 flex items-center">
+                            <i class="fa-solid fa-check-circle text-blue-500 mr-2 text-xl"></i> (A) 蒙地卡羅方法（Monte Carlo Method）
+                        </li>
+                        <li class="p-3 rounded-lg border border-gray-200">(B) K-means 聚類（K-means Clustering）</li>
+                        <li class="p-3 rounded-lg border border-gray-200">(C) 支持向量迴歸（Support Vector Regression, SVR）</li>
+                        <li class="p-3 rounded-lg border border-gray-200">(D) 特徵選取（Feature Selection）</li>
+                    </ul>
+                </div>
+                <h4 class="font-bold text-gray-800 text-lg mb-2"><i class="fa-solid fa-chalkboard-user text-blue-500 mr-2"></i>小恐龍解析</h4>
+                <p class="text-gray-700 leading-relaxed">
+                    這題的關鍵字是<strong>「隨機抽樣方式模擬多種可能情境」</strong>。當現實世界充滿不確定性（如天氣），我們無法寫出一個絕對準確的公式時，就利用電腦產生大量的隨機變數（亂數），跑出成千上萬種結果，最後統整這些結果的分佈。這正是蒙地卡羅方法的核心精神！
+                </p>
+            </div>
+        </section>
+
+        <!-- 第 5 張：蒙地卡羅 考古題 2 -->
+        <section id="card-5" class="knowledge-card border-t-blue-500" data-title="蒙地卡羅-實戰2">
+            <div class="card-header bg-gray-50">
+                <div class="card-number bg-blue-500">5</div>
+                <h2 class="text-2xl font-black text-gray-800">實戰演練：115年 AI規劃師中級 (Q1)</h2>
+                <span class="ml-auto bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded">考古題</span>
+            </div>
+            <div class="p-6 md:p-8">
+                <div class="mb-6 p-5 border-2 border-dashed border-gray-300 rounded-xl bg-white">
+                    <p class="text-lg text-gray-800 mb-4 font-medium leading-relaxed">
+                        某量化投資團隊需估算某投資組合未來30 日的風險值。由於衍生性金融商品的定價模型過於複雜，<span class="bg-yellow-200 px-1 font-bold">無法以解析解直接求得</span>，工程師因此採用隨機模擬方式，產生大量市場情境模擬並估計損失分布。此方法屬於下列哪一種技術框架？
+                    </p>
+                    <ul class="space-y-2 text-gray-700">
+                        <li class="p-3 rounded-lg border border-gray-200 text-sm">(A) 馬可夫鏈（Markov Chain）：以狀態轉移機率描述系統演變的隨機過程</li>
+                        <li class="p-3 rounded-lg border border-gray-200 text-sm">(B) 梯度下降最佳化（Gradient Descent）：透過迭代更新參數以最小化損失函數</li>
+                        <li class="p-3 rounded-lg border-2 border-blue-500 bg-blue-50 font-bold text-blue-800 flex items-start text-sm">
+                            <i class="fa-solid fa-check-circle text-blue-500 mr-2 mt-1 text-lg"></i> 
+                            <span>(C) 蒙地卡羅方法（Monte Carlo Method）：透過大量隨機抽樣近似機率分布或數值結果</span>
+                        </li>
+                        <li class="p-3 rounded-lg border border-gray-200 text-sm">(D) 貝氏推論（Bayesian Inference）：結合先驗分布與資料更新後驗機率</li>
+                    </ul>
+                </div>
+                <h4 class="font-bold text-gray-800 text-lg mb-2"><i class="fa-solid fa-chalkboard-user text-blue-500 mr-2"></i>小恐龍解析</h4>
+                <p class="text-gray-700 leading-relaxed">
+                    這題非常佛心，選項直接把定義寫出來了！題目提到「模型過於複雜，無法以解析解直接求得」，這就是呼叫蒙地卡羅的信號。在金融界，用蒙地卡羅模擬來計算「風險值 (Value at Risk, VaR)」是非常標準的作法。
+                </p>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- MODULE 2: MARKOV CHAIN -->
+        <!-- ========================================== -->
+
+        <!-- 第 6 張：馬可夫鏈 小遊戲 -->
+        <section id="card-6" class="knowledge-card border-t-amber-500" data-title="馬可夫鏈-小遊戲">
+            <div class="card-header">
+                <div class="card-number bg-amber-500">6</div>
+                <h2 class="text-2xl font-black text-amber-800">關卡二：馬可夫鏈 (遊戲篇)</h2>
+            </div>
+            <div class="p-6 md:p-8 flex flex-col md:flex-row gap-8">
+                <div class="flex-1">
+                    <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg mb-6 text-sm text-amber-800 shadow-sm">
+                        <strong>小恐龍語錄：</strong>「我是一隻沒有記憶的恐龍！我明天要在哪裡醒來，完全只看我『今天』在哪裡，跟我昨天、前天在哪裡一點關係都沒有！」
+                    </div>
+                    
+                    <p class="text-gray-700 mb-4 leading-relaxed">
+                        小恐龍只有兩個狀態：<strong>睡山洞</strong> 或 <strong>逛森林</strong>。<br>
+                        • 若今天在山洞，明天 <strong class="text-amber-600">70% 去森林</strong>，30% 繼續睡。<br>
+                        • 若今天在森林，明天 <strong class="text-green-600">60% 回山洞</strong>，40% 繼續逛。
+                    </p>
+
+                    <div class="flex gap-4 mb-6">
+                        <button onclick="markovStep()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors"><i class="fa-solid fa-forward-step mr-1"></i> 過一天</button>
+                        <button onclick="toggleMarkovAuto()" id="btn-markov-auto" class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors"><i class="fa-solid fa-play mr-1"></i> 自動觀察</button>
+                        <button onclick="resetMarkov()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg transition-colors">重置</button>
+                    </div>
+
+                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                        <h3 class="font-bold text-gray-700 mb-2">長期機率分佈 (穩態)</h3>
+                        <div class="text-sm text-gray-500 mb-2">總天數: <span id="mk-days" class="font-bold text-gray-800">0</span></div>
+                        
+                        <div class="mb-3">
+                            <div class="flex justify-between text-xs font-bold text-gray-600 mb-1">
+                                <span>山洞 <i class="fa-solid fa-mountain"></i></span>
+                                <span id="mk-cave-pct">0%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div id="mk-cave-bar" class="bg-gray-600 h-3 rounded-full progress-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-bold text-green-600 mb-1">
+                                <span>森林 <i class="fa-solid fa-tree"></i></span>
+                                <span id="mk-forest-pct">0%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div id="mk-forest-bar" class="bg-green-500 h-3 rounded-full progress-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-1 flex flex-col justify-center items-center relative min-h-[300px] bg-sky-50 rounded-2xl border-2 border-sky-100 p-4 overflow-hidden">
+                    <!-- Visual State -->
+                    <div class="w-full flex justify-between px-8 relative">
+                        <div class="flex flex-col items-center z-10">
+                            <div class="w-24 h-24 bg-gray-200 rounded-full flex justify-center items-center text-4xl shadow-inner relative border-4 border-gray-300 transition-colors duration-300" id="zone-cave">⛰️</div>
+                            <span class="font-bold text-gray-700 mt-2 bg-white/80 px-2 rounded">山洞</span>
+                        </div>
+
+                        <!-- Dino -->
+                        <div id="mk-dino" class="absolute top-1/2 left-[40px] transform -translate-y-1/2 text-5xl transition-all duration-500 ease-in-out z-20 bounce text-green-600">
+                            <i class="fa-solid fa-dragon drop-shadow-md"></i>
+                        </div>
+
+                        <div class="flex flex-col items-center z-10">
+                            <div class="w-24 h-24 bg-green-100 rounded-full flex justify-center items-center text-4xl shadow-inner relative border-4 border-green-300 transition-colors duration-300" id="zone-forest">🌲</div>
+                            <span class="font-bold text-green-700 mt-2 bg-white/80 px-2 rounded">森林</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 text-center text-sm font-bold text-gray-600 bg-white px-4 py-2 rounded-lg shadow-sm z-10 border border-gray-200">
+                        <span id="mk-status-text">今天恐龍在山洞裡睡覺。</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第 7 張：馬可夫鏈 正式定義 -->
+        <section id="card-7" class="knowledge-card border-t-amber-500" data-title="馬可夫鏈-定義">
+            <div class="card-header">
+                <div class="card-number bg-amber-500">7</div>
+                <h2 class="text-2xl font-black text-amber-800">學術殿堂：馬可夫鏈正式定義</h2>
+            </div>
+            <div class="p-6 md:p-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-3"><i class="fa-solid fa-link text-amber-500 mr-2"></i>核心精神：無記憶性的狀態轉移</h3>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    馬可夫鏈（Markov Chain）描述了一個系統在不同「狀態」間轉換的隨機過程。它最重要特徵是<strong>「馬可夫性質（無記憶性）」</strong>：系統在下一時刻的狀態，<strong>只由現在的狀態決定</strong>，與過去的歷史軌跡無關。
+                </p>
+                
+                <div class="bg-amber-50 p-6 rounded-xl border border-amber-100 mb-4">
+                    <h4 class="font-bold text-amber-800 mb-2">數學定義：馬可夫性質</h4>
+                    <div class="text-center text-lg overflow-x-auto pb-2">
+                        $$ P(X_{n+1} = x | X_1=x_1, X_2=x_2, ..., X_n=x_n) = P(X_{n+1} = x | X_n=x_n) $$
+                    </div>
+                    
+                    <h4 class="font-bold text-amber-800 mb-2 mt-4">轉移矩陣 (Transition Matrix)</h4>
+                    <p class="text-gray-700 text-sm mb-2">上面小恐龍遊戲的機率，可以用一個矩陣 $P$ 來表示。經過足夠長的時間，系統會達到一個「穩態 (Steady State)」，此時處於各狀態的機率將不再隨時間改變。</p>
+                    <div class="text-center text-lg overflow-x-auto">
+                        $$ P = \begin{bmatrix} 0.3 & 0.7 \\ 0.6 & 0.4 \end{bmatrix} $$
+                    </div>
+                </div>
+                <p class="text-gray-700 font-bold">常見應用：<span class="font-normal">Google 網頁排序 (PageRank)、文字生成模型 (N-gram)、語音辨識 (HMM)、棋盤遊戲分析。</span></p>
+            </div>
+        </section>
+
+        <!-- 第 8 張：馬可夫鏈 考古題概念 -->
+        <section id="card-8" class="knowledge-card border-t-amber-500" data-title="馬可夫鏈-實戰">
+            <div class="card-header bg-gray-50">
+                <div class="card-number bg-amber-500">8</div>
+                <h2 class="text-2xl font-black text-gray-800">實戰演練：馬可夫概念題 (115年 Q1選項延伸)</h2>
+                <span class="ml-auto bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded">觀念釐清</span>
+            </div>
+            <div class="p-6 md:p-8">
+                <div class="mb-6 p-5 border-2 border-dashed border-gray-300 rounded-xl bg-white">
+                    <p class="text-lg text-gray-800 mb-4 font-medium leading-relaxed">
+                        在 115 年第一題中，選項 (A) 出現了馬可夫鏈的標準定義。考題常喜歡把這些名詞放在一起混淆考生。請問下列哪一種情境<strong>最不適合</strong>使用馬可夫鏈來建模？
+                    </p>
+                    <ul class="space-y-2 text-gray-700">
+                        <li class="p-3 rounded-lg border border-gray-200">(A) 預測明日天氣是晴天、陰天或雨天（假設只受今天天氣影響）。</li>
+                        <li class="p-3 rounded-lg border border-gray-200">(B) 模擬大富翁遊戲中，玩家棋子落在各個格子的機率分佈。</li>
+                        <li class="p-3 rounded-lg border-2 border-amber-500 bg-amber-50 font-bold text-amber-800 flex items-start">
+                            <i class="fa-solid fa-check-circle text-amber-500 mr-2 mt-1"></i> 
+                            <span>(C) 預測一部電影最終的票房，需要綜合考量導演、卡司、劇本品質、行銷預算等多重連續變數。</span>
+                        </li>
+                        <li class="p-3 rounded-lg border border-gray-200">(D) 預測使用者在網頁間跳轉的瀏覽路徑。</li>
+                    </ul>
+                </div>
+                <h4 class="font-bold text-gray-800 text-lg mb-2"><i class="fa-solid fa-chalkboard-user text-amber-500 mr-2"></i>小恐龍解析</h4>
+                <p class="text-gray-700 leading-relaxed">
+                    馬可夫鏈最適合處理的是<strong>「離散的狀態空間」</strong>且具備<strong>「狀態轉移」</strong>特性的問題 (A, B, D 皆是)。選項 (C) 屬於典型的「迴歸問題 (Regression)」，需要考慮多個特徵的交互作用來預測一個連續數值，而不是在幾個狀態間跳來跳去，因此不適合用標準的馬可夫鏈。
+                </p>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- MODULE 3: BAYESIAN INFERENCE -->
+        <!-- ========================================== -->
+
+        <!-- 第 9 張：貝氏推論 小遊戲 -->
+        <section id="card-9" class="knowledge-card border-t-purple-500" data-title="貝氏推論-小遊戲">
+            <div class="card-header">
+                <div class="card-number bg-purple-500">9</div>
+                <h2 class="text-2xl font-black text-purple-800">關卡三：貝氏推論 (遊戲篇)</h2>
+            </div>
+            <div class="p-6 md:p-8 flex flex-col lg:flex-row gap-8">
+                <div class="flex-1">
+                    <div class="bg-purple-50 border-l-4 border-purple-500 p-4 rounded-r-lg mb-6 text-sm text-purple-800 shadow-sm">
+                        <strong>小恐龍語錄：</strong>「我一開始以為肉藏在三個草叢的機率是一樣的。但我剛才聞到了一股香味！雖然我的雷達有時候會出錯，但我可以把『原本的猜測』加上『新證據』，更新肉在哪裡的機率！」
+                    </div>
+                    
+                    <p class="text-gray-700 mb-4 text-sm leading-relaxed">
+                        目標：找出大肉腿 🍖。初始每個草叢機率都是 33.3%。<br>
+                        你可以使用<strong>「嗅覺雷達」</strong>探測草叢。雷達有 <strong>80% 準確率</strong> (有肉會響；沒肉20%機率誤報)。每探測一次，機率就會根據貝氏定理「更新」！
+                    </p>
+
+                    <div class="flex gap-4 mb-4">
+                        <button onclick="resetBayes()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors w-full">重新藏肉 / 重置機率</button>
+                    </div>
+                    <div id="bayes-message" class="text-center font-bold text-purple-600 bg-purple-100 p-3 rounded-lg min-h-[48px] border border-purple-200">
+                        請點擊下方的「探測」按鈕來搜集證據！
+                    </div>
+                    
+                    <!-- ★★★ 新增：計算解密區塊 ★★★ -->
+                    <div id="bayes-explanation" class="mt-6 bg-gray-50 border border-gray-200 rounded-xl p-4 hidden">
+                        <h4 class="font-bold text-purple-800 border-b border-purple-200 pb-2 mb-3">🔍 貝氏計算解密</h4>
+                        <p class="text-sm text-gray-700 mb-2">剛才發生了什麼事？讓我們來算算看：</p>
+                        
+                        <div class="space-y-3 text-sm">
+                            <div class="flex items-start gap-2">
+                                <div class="bg-purple-200 text-purple-800 font-bold px-2 py-1 rounded text-xs">Step 1</div>
+                                <div>
+                                    <span class="font-bold text-gray-800">先驗機率 (Prior)</span>：探測前，我們認為各草叢有肉的機率。<br>
+                                    <span class="font-mono text-gray-600" id="expl-prior">A: 33%, B: 33%, C: 33%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-2">
+                                <div class="bg-blue-200 text-blue-800 font-bold px-2 py-1 rounded text-xs">Step 2</div>
+                                <div>
+                                    <span class="font-bold text-gray-800">概似度 (Likelihood)</span>：根據雷達的反應，評估這份證據。<br>
+                                    <span id="expl-evidence-text" class="italic text-gray-600">雷達探測 A 草叢並且響了！</span><br>
+                                    <ul class="list-disc pl-4 mt-1 text-gray-600 space-y-1">
+                                        <li id="expl-lh-target">如果肉在 A，雷達響的機率是 <strong>80%</strong></li>
+                                        <li id="expl-lh-other">如果肉在 B/C，雷達(誤)響的機率是 <strong>20%</strong></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-2">
+                                <div class="bg-yellow-200 text-yellow-800 font-bold px-2 py-1 rounded text-xs">Step 3</div>
+                                <div class="w-full">
+                                    <span class="font-bold text-gray-800">計算分子</span>：先驗 × 概似度<br>
+                                    <div id="expl-numerators" class="text-xs text-gray-600 font-mono mt-1 bg-white p-2 rounded border border-gray-100">
+                                        <!-- JS會填入 -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-2">
+                                <div class="bg-red-200 text-red-800 font-bold px-2 py-1 rounded text-xs">Step 4</div>
+                                <div class="w-full">
+                                    <span class="font-bold text-gray-800">更新機率 (Posterior)</span>：除以分母，調整比例讓總和為 100%<br>
+                                    <div id="expl-denominator" class="text-xs text-gray-500 italic mt-1">
+                                        <!-- JS會填入 -->
+                                    </div>
+                                    <div class="font-mono text-gray-700 mt-1 bg-purple-50 p-2 rounded border border-purple-100" id="expl-posterior">
+                                        <!-- JS會填入 -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-1 flex flex-col gap-3">
+                    <!-- Bushes -->
+                    <div id="bush-1" class="bg-white border-2 border-gray-200 rounded-xl p-3 flex items-center gap-4 relative overflow-hidden transition-all hover:border-purple-300">
+                        <div class="text-4xl ml-2">🌿</div>
+                        <div class="flex-1">
+                            <div class="flex justify-between mb-1">
+                                <span class="font-bold text-gray-700 text-sm">草叢 A 機率</span>
+                                <span id="prob-1-text" class="font-bold text-purple-600 text-sm">33.3%</span>
+                            </div>
+                            <div class="w-full bg-gray-100 rounded-full h-2">
+                                <div id="prob-1-bar" class="bg-purple-500 h-2 rounded-full progress-bar" style="width: 33.33%"></div>
+                            </div>
+                        </div>
+                        <button onclick="sniff(0)" class="bg-purple-100 hover:bg-purple-200 text-purple-700 font-bold py-2 px-3 rounded-lg text-sm shrink-0 shadow-sm border border-purple-200 transition-colors z-20">
+                            <i class="fa-solid fa-radar mr-1"></i>探測
+                        </button>
+                        <div id="result-0" class="absolute inset-0 bg-white/95 flex items-center justify-center text-3xl hidden backdrop-blur-sm z-30 transition-all"></div>
+                    </div>
+
+                    <div id="bush-2" class="bg-white border-2 border-gray-200 rounded-xl p-3 flex items-center gap-4 relative overflow-hidden transition-all hover:border-purple-300">
+                        <div class="text-4xl ml-2">🌿</div>
+                        <div class="flex-1">
+                            <div class="flex justify-between mb-1">
+                                <span class="font-bold text-gray-700 text-sm">草叢 B 機率</span>
+                                <span id="prob-2-text" class="font-bold text-purple-600 text-sm">33.3%</span>
+                            </div>
+                            <div class="w-full bg-gray-100 rounded-full h-2">
+                                <div id="prob-2-bar" class="bg-purple-500 h-2 rounded-full progress-bar" style="width: 33.33%"></div>
+                            </div>
+                        </div>
+                        <button onclick="sniff(1)" class="bg-purple-100 hover:bg-purple-200 text-purple-700 font-bold py-2 px-3 rounded-lg text-sm shrink-0 shadow-sm border border-purple-200 transition-colors z-20">
+                            <i class="fa-solid fa-radar mr-1"></i>探測
+                        </button>
+                        <div id="result-1" class="absolute inset-0 bg-white/95 flex items-center justify-center text-3xl hidden backdrop-blur-sm z-30 transition-all"></div>
+                    </div>
+
+                    <div id="bush-3" class="bg-white border-2 border-gray-200 rounded-xl p-3 flex items-center gap-4 relative overflow-hidden transition-all hover:border-purple-300">
+                        <div class="text-4xl ml-2">🌿</div>
+                        <div class="flex-1">
+                            <div class="flex justify-between mb-1">
+                                <span class="font-bold text-gray-700 text-sm">草叢 C 機率</span>
+                                <span id="prob-3-text" class="font-bold text-purple-600 text-sm">33.3%</span>
+                            </div>
+                            <div class="w-full bg-gray-100 rounded-full h-2">
+                                <div id="prob-3-bar" class="bg-purple-500 h-2 rounded-full progress-bar" style="width: 33.33%"></div>
+                            </div>
+                        </div>
+                        <button onclick="sniff(2)" class="bg-purple-100 hover:bg-purple-200 text-purple-700 font-bold py-2 px-3 rounded-lg text-sm shrink-0 shadow-sm border border-purple-200 transition-colors z-20">
+                            <i class="fa-solid fa-radar mr-1"></i>探測
+                        </button>
+                        <div id="result-2" class="absolute inset-0 bg-white/95 flex items-center justify-center text-3xl hidden backdrop-blur-sm z-30 transition-all"></div>
+                    </div>
+
+                    <button onclick="openBushes()" class="mt-2 bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-xl shadow-md transition-colors w-full text-base">
+                        掀開草叢看結果！
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第 10 張：貝氏推論 正式定義 -->
+        <section id="card-10" class="knowledge-card border-t-purple-500" data-title="貝氏推論-定義">
+            <div class="card-header">
+                <div class="card-number bg-purple-500">10</div>
+                <h2 class="text-2xl font-black text-purple-800">學術殿堂：貝氏定理正式定義</h2>
+            </div>
+            <div class="p-6 md:p-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-3"><i class="fa-solid fa-scale-balanced text-purple-500 mr-2"></i>核心精神：根據新證據「更新」你的信念</h3>
+                <p class="text-gray-700 mb-4 leading-relaxed">
+                    在貝氏推論中，機率不只是一個客觀的頻率，更是我們對某件事的<strong>「主觀信念程度」</strong>。當我們觀察到新的數據或證據時，我們會用貝氏定理來更新我們原本的信念。
+                </p>
+                
+                <div class="bg-purple-50 p-6 rounded-xl border border-purple-100 mb-4">
+                    <h4 class="font-bold text-purple-800 mb-2">貝氏定理公式</h4>
+                    <div class="text-center text-xl overflow-x-auto py-2">
+                        $$ P(H|E) = \frac{P(E|H) \cdot P(H)}{P(E)} $$
+                    </div>
+                    <ul class="text-gray-700 mt-4 space-y-2 text-sm">
+                        <li><strong class="text-purple-700">P(H) 先驗機率 (Prior)：</strong> 在看到證據前，你認為假設(H)成立的機率。(例：一開始認為肉在A的機率 33%)</li>
+                        <li><strong class="text-blue-600">P(E|H) 概似度 (Likelihood)：</strong> 如果假設(H)是真的，那麼觀察到證據(E)的機率。(例：如果肉真的在A，雷達響起的機率 80%)</li>
+                        <li><strong class="text-red-600">P(H|E) 後驗機率 (Posterior)：</strong> 在看到證據(E)之後，假設(H)成立的最新機率。(這就是我們要計算的結果！)</li>
+                    </ul>
+                </div>
+                <p class="text-gray-700 font-bold">常見應用：<span class="font-normal">垃圾郵件過濾 (Naive Bayes)、醫療疾病診斷 (陽性/陰性推論)、機器學習參數估計。</span></p>
+            </div>
+        </section>
+
+        <!-- 第 11 張：貝氏推論 考古題 1 -->
+        <section id="card-11" class="knowledge-card border-t-purple-500" data-title="貝氏推論-實戰1">
+            <div class="card-header bg-gray-50">
+                <div class="card-number bg-purple-500">11</div>
+                <h2 class="text-2xl font-black text-gray-800">實戰演練：114年 AI規劃師中級 (Q22)</h2>
+                <span class="ml-auto bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded">考古題</span>
+            </div>
+            <div class="p-6 md:p-8">
+                <div class="mb-6 p-5 border-2 border-dashed border-gray-300 rounded-xl bg-white">
+                    <p class="text-lg text-gray-800 mb-4 font-medium leading-relaxed">
+                        某電商平台希望預測顧客是否會購買特定商品。系統蒐集顧客的瀏覽紀錄、停留時間、商品類別偏好與過去購買行為，並以此推估<span class="bg-yellow-200 px-1 font-bold">「在觀察到這些行為特徵的情況下，該顧客會購買的機率」</span>。若模型採用貝氏定理（Bayes’Theorem）進行推論，下列敘述何者最符合其核心運作機制？
+                    </p>
+                    <ul class="space-y-2 text-gray-700 text-sm">
+                        <li class="p-3 rounded-lg border border-gray-200">(A) 根據歷史樣本自動分群，找出行為相似的顧客群</li>
+                        <li class="p-3 rounded-lg border-2 border-purple-500 bg-purple-50 font-bold text-purple-800 flex items-start">
+                            <i class="fa-solid fa-check-circle text-purple-500 mr-2 mt-1"></i> 
+                            <span>(B) 以條件機率方式計算顧客屬於「會購買」或「不會購買」的分類機率</span>
+                        </li>
+                        <li class="p-3 rounded-lg border border-gray-200">(C) 以最小平方誤差（Mean Squared Error）為損失函數，預測顧客的購買金額</li>
+                        <li class="p-3 rounded-lg border border-gray-200">(D) 依據回饋信號（Feedback Signal）透過強化學習動態調整推薦策略</li>
+                    </ul>
+                </div>
+                <h4 class="font-bold text-gray-800 text-lg mb-2"><i class="fa-solid fa-chalkboard-user text-purple-500 mr-2"></i>小恐龍解析</h4>
+                <p class="text-gray-700 leading-relaxed">
+                    這題描述了貝氏分類器的核心：計算<strong>條件機率</strong> $P(\text{會購買} | \text{行為特徵})$。平台先有顧客整體購買的先驗機率，接著觀察到新的證據（如：他看了商品3分鐘），用這個證據去更新機率，得出最終屬於「會購買」這個類別的後驗機率。
+                </p>
+            </div>
+        </section>
+
+        <!-- 第 12 張：貝氏推論 考古題 2 -->
+        <section id="card-12" class="knowledge-card border-t-purple-500" data-title="貝氏推論-實戰2">
+            <div class="card-header bg-gray-50">
+                <div class="card-number bg-purple-500">12</div>
+                <h2 class="text-2xl font-black text-gray-800">實戰演練：115年 AI規劃師中級 (Q14)</h2>
+                <span class="ml-auto bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded">考古題</span>
+            </div>
+            <div class="p-6 md:p-8">
+                <div class="mb-6 p-5 border-2 border-dashed border-gray-300 rounded-xl bg-white">
+                    <p class="text-[15px] text-gray-800 mb-4 font-medium leading-relaxed">
+                        某電商平台使用<span class="font-bold underline">樸素貝氏分類器（Naive Bayes）</span>建立垃圾郵件過濾模型。訓練集準確率達92%，但上線後發現，包含「限時優惠、立即下單享折扣」等關鍵字的正常促銷郵件，常被誤判為垃圾信。經分析發現，這些詞彙在訓練資料中多出現在垃圾郵件中，導致其<span class="bg-yellow-200 px-1 font-bold">類別條件機率偏高</span>。請問造成此現象的最主要原因與較適當的改善方式為何？
+                    </p>
+                    <ul class="space-y-2 text-gray-700 text-sm">
+                        <li class="p-2 rounded-lg border border-gray-200">(A) 應禁用Naive Bayes，改用其他更先進演算法</li>
+                        <li class="p-2 rounded-lg border border-gray-200">(B) 模型過擬合於訓練資料，應增加Epoch 數以提升泛化能力</li>
+                        <li class="p-3 rounded-lg border-2 border-purple-500 bg-purple-50 font-bold text-purple-800 flex items-start">
+                            <i class="fa-solid fa-check-circle text-purple-500 mr-2 mt-1"></i> 
+                            <span>(C) 類別條件機率受訓練資料分布影響，導致促銷關鍵字被視為垃圾信特徵，應重新平衡資料或調整先驗機率</span>
+                        </li>
+                        <li class="p-2 rounded-lg border border-gray-200">(D) 模型未進行特徵標準化，導致分類邊界偏移，應先進行正規化處理</li>
+                    </ul>
+                </div>
+                <h4 class="font-bold text-gray-800 text-lg mb-2"><i class="fa-solid fa-chalkboard-user text-purple-500 mr-2"></i>小恐龍解析</h4>
+                <p class="text-gray-700 text-sm leading-relaxed">
+                    在貝氏分類器中，$P(\text{垃圾信} | \text{"限時優惠"})$ 高度依賴訓練資料中「限時優惠」出現在垃圾信的頻率 (Likelihood)。如果訓練資料餵給它的全是包含這些字的垃圾信，模型就會強烈認定這些字是垃圾信的證據。解決方法就是平衡資料（增加正常的促銷信件到訓練集中），或者人為調整先驗機率/進行平滑處理 (Smoothing)。
+                </p>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- MODULE 4: COMPARISON & SUMMARY -->
+        <!-- ========================================== -->
+
+        <!-- 第 13 張：三者比較表 -->
+        <section id="card-13" class="knowledge-card border-t-gray-700" data-title="三神器總評比">
+            <div class="card-header bg-gray-50">
+                <div class="card-number bg-gray-700">13</div>
+                <h2 class="text-2xl font-black text-gray-800">三神器總評比：三大模型終極比較</h2>
+            </div>
+            <div class="p-6 md:p-8 overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="p-3 border-b-2 border-gray-300 text-gray-600 w-1/4">比較項目</th>
+                            <th class="p-3 border-b-2 border-blue-500 text-blue-700 font-bold bg-blue-50 w-1/4">蒙地卡羅 (MC)</th>
+                            <th class="p-3 border-b-2 border-amber-500 text-amber-700 font-bold bg-amber-50 w-1/4">馬可夫鏈 (Markov)</th>
+                            <th class="p-3 border-b-2 border-purple-500 text-purple-700 font-bold bg-purple-50 w-1/4">貝氏推論 (Bayes)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr>
+                            <td class="p-3 border-b border-gray-200 font-bold text-gray-700">核心一句話</td>
+                            <td class="p-3 border-b border-gray-200 bg-blue-50/50">「丟大量亂數，看結果統計」</td>
+                            <td class="p-3 border-b border-gray-200 bg-amber-50/50">「下一秒去哪，只看這一秒」</td>
+                            <td class="p-3 border-b border-gray-200 bg-purple-50/50">「有了新證據，更新舊觀念」</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 border-b border-gray-200 font-bold text-gray-700">主要處理什麼？</td>
+                            <td class="p-3 border-b border-gray-200">難以精算積分的<strong>複雜系統與期望值</strong></td>
+                            <td class="p-3 border-b border-gray-200">隨時間變化的<strong>序列狀態轉移</strong></td>
+                            <td class="p-3 border-b border-gray-200">充滿不確定性的<strong>逆向機率與信念更新</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 border-b border-gray-200 font-bold text-gray-700">關鍵字 (考題常見)</td>
+                            <td class="p-3 border-b border-gray-200 font-mono text-xs text-blue-600">隨機抽樣, 模擬, 近似, 大數法則</td>
+                            <td class="p-3 border-b border-gray-200 font-mono text-xs text-amber-600">無記憶性, 狀態轉移, 穩態矩陣</td>
+                            <td class="p-3 border-b border-gray-200 font-mono text-xs text-purple-600">先驗機率, 後驗機率, 條件機率, 證據</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-gray-700">經典應用場景</td>
+                            <td class="p-3 bg-blue-50/50">金融 VaR 風險評估、AlphaGo 走子模擬 (MCTS)</td>
+                            <td class="p-3 bg-amber-50/50">PageRank 網頁排序、天氣狀態預測</td>
+                            <td class="p-3 bg-purple-50/50">垃圾信件過濾、醫療疾病確診率評估</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 第 14 張：情境測驗 -->
+        <section id="card-14" class="knowledge-card border-t-red-500" data-title="知識驗收-測驗">
+            <div class="card-header bg-gray-50">
+                <div class="card-number bg-red-500">14</div>
+                <h2 class="text-2xl font-black text-gray-800">知識驗收：該用哪招？</h2>
+            </div>
+            <div class="p-6 md:p-8">
+                <p class="text-gray-700 mb-6">考驗你的直覺！請閱讀以下三個情境，點擊按鈕選擇最適合的模型。</p>
+                
+                <div class="space-y-6">
+                    <!-- Q1 -->
+                    <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm quiz-item">
+                        <p class="font-bold text-gray-800 mb-3">情境一：<span class="font-normal">醫生幫病人做了一項準確率 99% 的罕見疾病檢測，結果呈陽性。醫生想知道病人「真的患病」的機率是多少？</span></p>
+                        <div class="flex gap-2">
+                            <button onclick="checkQuiz(this, 'bayes')" class="flex-1 py-2 rounded bg-gray-100 hover:bg-gray-200 text-sm font-bold">蒙地卡羅</button>
+                            <button onclick="checkQuiz(this, 'bayes')" class="flex-1 py-2 rounded bg-gray-100 hover:bg-gray-200 text-sm font-bold">馬可夫鏈</button>
+                            <button onclick="checkQuiz(this, 'bayes', true)" class="flex-1 py-2 rounded bg-gray-100 hover:bg-gray-200 text-sm font-bold">貝氏推論</button>
+                        </div>
+                        <div class="quiz-feedback hidden mt-3 text-sm font-bold"></div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm quiz-item">
+                        <p class="font-bold text-gray-800 mb-3">情境二：<span class="font-normal">你要設計一個自動寫作機器人，它根據前一個單字來猜測並產生下一個單字。</span></p>
+                        <div class="flex gap-2">
+                            <button onclick="checkQuiz(this, 'markov')" class="flex-1 py-2 rounded bg-gray-100 hover:bg-gray-200 text-sm font-bold">蒙地卡羅</button>
+                            <button onclick="checkQuiz(this, 'markov', true)" class="flex-1 py-2 rounded bg-gray-100 hover:bg-gray-200 text-sm font-bold">馬可夫鏈</button>
+                            <button onclick="checkQuiz(this, 'markov')" class="flex-1 py-2 rounded bg-gray-100 hover:bg-gray-200 text-sm font-bold">貝氏推論</button>
+                        </div>
+                        <div class="quiz-feedback hidden mt-3 text-sm font-bold"></div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm quiz-item">
+                        <p class="font-bold text-gray-800 mb-3">情境三：<span class="font-normal">你要計算某個形狀極度不規則的湖泊面積，決定用直升機在空中隨機空投一萬顆球，算算掉進水裡的比例。</span></p>
+                        <div class="flex gap-2">
+                            <button onclick="checkQuiz(this, 'mc', true)" class="flex-1 py-2 rounded bg-gray-100 hover:bg-gray-200 text-sm font-bold">蒙地卡羅</button>
+                            <button onclick="checkQuiz(this, 'mc')" class="flex-1 py-2 rounded bg-gray-100 hover:bg-gray-200 text-sm font-bold">馬可夫鏈</button>
+                            <button onclick="checkQuiz(this, 'mc')" class="flex-1 py-2 rounded bg-gray-100 hover:bg-gray-200 text-sm font-bold">貝氏推論</button>
+                        </div>
+                        <div class="quiz-feedback hidden mt-3 text-sm font-bold"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第 15 張：結業證書 -->
+        <section id="card-15" class="knowledge-card border-none bg-gradient-to-br from-green-400 to-emerald-600 text-white" data-title="結業證書">
+            <div class="p-10 md:p-16 text-center">
+                <i class="fa-solid fa-award text-6xl text-yellow-300 mb-6 drop-shadow-md pulse-slow"></i>
+                <h2 class="text-4xl font-black mb-4">恭喜通關 15 道機率試煉！⚔️</h2>
+                <p class="text-xl text-green-50 mb-8 max-w-2xl mx-auto">
+                    你已經成功掌握了機器學習中三個最難懂但也最重要的機率模型。不論是遇到蒙地卡羅的隨機性、馬可夫鏈的無記憶性，還是貝氏推論的條件機率，你都能游刃有餘地面對！
+                </p>
+                <div class="bg-white/20 p-4 rounded-xl inline-block backdrop-blur-sm border border-white/30 shadow-lg">
+                    <p class="font-bold text-xl tracking-wider">AI 應用規劃師中級能力鑑定 證書 Get <i class="fa-solid fa-check-circle text-green-200 ml-1"></i></p>
+                </div>
+                <div class="mt-8">
+                    <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="bg-white text-green-700 hover:bg-gray-100 font-bold py-3 px-8 rounded-full shadow-md transition-transform transform hover:-translate-y-1">
+                        <i class="fa-solid fa-arrow-up mr-2"></i>回到頂部複習
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. Navigation & Scroll Observer
+        // ==========================================
+        const cards = document.querySelectorAll('header, section');
+        const navContainer = document.getElementById('dot-nav-container');
+        
+        // Generate Dots
+        cards.forEach((card, index) => {
+            const dotContainer = document.createElement('div');
+            dotContainer.className = 'relative nav-dot-container group flex items-center justify-end w-full cursor-pointer';
+            dotContainer.onclick = () => card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            const tooltipText = card.getAttribute('data-title') || (index === 0 ? '首頁' : `卡片 ${index+1}`);
+            
+            dotContainer.innerHTML = `
+                <span class="tooltip absolute right-6 bg-gray-800 text-white text-xs font-bold px-2 py-1 rounded whitespace-nowrap mr-2">
+                    ${index+1}. ${tooltipText}
+                </span>
+                <div class="nav-dot" id="dot-${index}"></div>
+            `;
+            navContainer.appendChild(dotContainer);
+        });
+
+        // Intersection Observer for highlighting dots
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Remove active from all
+                    document.querySelectorAll('.nav-dot').forEach(d => d.classList.remove('active'));
+                    // Find index of intersecting card
+                    const index = Array.from(cards).indexOf(entry.target);
+                    const activeDot = document.getElementById(`dot-${index}`);
+                    if (activeDot) activeDot.classList.add('active');
+                }
+            });
+        }, { threshold: 0.3 }); // Trigger when 30% of card is visible
+
+        cards.forEach(card => observer.observe(card));
+
+        // ==========================================
+        // 2. Monte Carlo Logic
+        // ==========================================
+        const mcCanvas = document.getElementById('mc-canvas');
+        const mcCtx = mcCanvas.getContext('2d');
+        const mcSize = mcCanvas.width;
+        const mcRadius = mcSize / 2;
+        let mcTotal = 0;
+        let mcInside = 0;
+
+        function drawMCArea() {
+            mcCtx.clearRect(0, 0, mcSize, mcSize);
+            // Square background
+            mcCtx.fillStyle = '#f8fafc';
+            mcCtx.fillRect(0, 0, mcSize, mcSize);
+            
+            // Circle
+            mcCtx.beginPath();
+            mcCtx.arc(mcRadius, mcRadius, mcRadius, 0, 2 * Math.PI);
+            mcCtx.fillStyle = '#bfdbfe'; // Light blue
+            mcCtx.fill();
+            mcCtx.lineWidth = 2;
+            mcCtx.strokeStyle = '#3b82f6';
+            mcCtx.stroke();
+        }
+
+        function throwDarts(count) {
+            if (mcTotal === 0) drawMCArea();
+
+            for(let i = 0; i < count; i++) {
+                let x = (Math.random() * 2) - 1;
+                let y = (Math.random() * 2) - 1;
+                
+                let distanceSquared = x*x + y*y;
+                let isInside = distanceSquared <= 1;
+                
+                if(isInside) mcInside++;
+                mcTotal++;
+
+                let canvasX = (x + 1) * mcRadius;
+                let canvasY = (y + 1) * mcRadius;
+
+                mcCtx.beginPath();
+                mcCtx.arc(canvasX, canvasY, 1.5, 0, 2 * Math.PI);
+                mcCtx.fillStyle = isInside ? '#ef4444' : '#64748b'; // Red inside, gray outside
+                mcCtx.fill();
+            }
+            updateMCStats();
+        }
+
+        function updateMCStats() {
+            document.getElementById('mc-total').innerText = mcTotal.toLocaleString();
+            let piEstimate = 4 * (mcInside / mcTotal);
+            document.getElementById('mc-pi').innerText = piEstimate.toFixed(4);
+        }
+
+        function resetMC() {
+            mcTotal = 0;
+            mcInside = 0;
+            drawMCArea();
+            updateMCStats();
+        }
+
+        // Initialize Canvas
+        drawMCArea();
+
+        // ==========================================
+        // 3. Markov Chain Logic
+        // ==========================================
+        // State 0: Cave, State 1: Forest
+        const mkP = [
+            [0.3, 0.7], 
+            [0.6, 0.4]  
+        ];
+        
+        let mkState = 0;
+        let mkDays = 0;
+        let mkCounts = [0, 0];
+        let mkAutoInterval = null;
+
+        function updateMarkovUI() {
+            const dino = document.getElementById('mk-dino');
+            if(mkState === 0) {
+                dino.style.left = '40px'; 
+                document.getElementById('mk-status-text').innerText = "今天恐龍在山洞裡睡覺。";
+                document.getElementById('zone-cave').classList.add('border-green-500', 'bg-gray-100');
+                document.getElementById('zone-forest').classList.remove('border-green-500');
+            } else {
+                dino.style.left = 'calc(100% - 100px)'; 
+                document.getElementById('mk-status-text').innerText = "今天恐龍在森林裡打獵。";
+                document.getElementById('zone-forest').classList.add('border-green-500', 'bg-green-200');
+                document.getElementById('zone-cave').classList.remove('border-green-500');
+            }
+
+            document.getElementById('mk-days').innerText = mkDays;
+            if(mkDays > 0) {
+                const cavePct = (mkCounts[0] / mkDays * 100).toFixed(1);
+                const forestPct = (mkCounts[1] / mkDays * 100).toFixed(1);
+                
+                document.getElementById('mk-cave-pct').innerText = `${cavePct}%`;
+                document.getElementById('mk-cave-bar').style.width = `${cavePct}%`;
+                
+                document.getElementById('mk-forest-pct').innerText = `${forestPct}%`;
+                document.getElementById('mk-forest-bar').style.width = `${forestPct}%`;
+            }
+        }
+
+        function markovStep() {
+            mkDays++;
+            mkCounts[mkState]++;
+            const rand = Math.random();
+            mkState = (rand < mkP[mkState][0]) ? 0 : 1;
+            updateMarkovUI();
+        }
+
+        function toggleMarkovAuto() {
+            const btn = document.getElementById('btn-markov-auto');
+            if (mkAutoInterval) {
+                clearInterval(mkAutoInterval);
+                mkAutoInterval = null;
+                btn.innerHTML = '<i class="fa-solid fa-play mr-1"></i> 自動觀察';
+                btn.classList.replace('bg-red-500', 'bg-amber-600');
+                btn.classList.replace('hover:bg-red-600', 'hover:bg-amber-700');
+            } else {
+                mkAutoInterval = setInterval(markovStep, 400); 
+                btn.innerHTML = '<i class="fa-solid fa-stop mr-1"></i> 停止觀察';
+                btn.classList.replace('bg-amber-600', 'bg-red-500');
+                btn.classList.replace('hover:bg-amber-700', 'hover:bg-red-600');
+            }
+        }
+
+        function resetMarkov() {
+            if(mkAutoInterval) toggleMarkovAuto();
+            mkState = 0;
+            mkDays = 0;
+            mkCounts = [0, 0];
+            
+            document.getElementById('mk-days').innerText = '0';
+            document.getElementById('mk-cave-pct').innerText = `0%`;
+            document.getElementById('mk-cave-bar').style.width = `0%`;
+            document.getElementById('mk-forest-pct').innerText = `0%`;
+            document.getElementById('mk-forest-bar').style.width = `0%`;
+            
+            updateMarkovUI();
+        }
+        updateMarkovUI();
+
+        // ==========================================
+        // 4. Bayesian Inference Logic
+        // ==========================================
+        let meatLoc = Math.floor(Math.random() * 3); 
+        let bayesProbs = [1/3, 1/3, 1/3]; 
+        const truePos = 0.8;  
+        const falsePos = 0.2; 
+
+        function updateBayesUI() {
+            for(let i=0; i<3; i++) {
+                const pct = (bayesProbs[i] * 100).toFixed(1);
+                document.getElementById(`prob-${i+1}-text`).innerText = `${pct}%`;
+                document.getElementById(`prob-${i+1}-bar`).style.width = `${pct}%`;
+                
+                const maxProb = Math.max(...bayesProbs);
+                const container = document.getElementById(`bush-${i+1}`);
+                if (bayesProbs[i] === maxProb && maxProb > 0.4) {
+                    container.classList.add('border-purple-400', 'bg-purple-50');
+                } else {
+                    container.classList.remove('border-purple-400', 'bg-purple-50');
+                }
+            }
+        }
+
+        function formatPct(val) {
+            return (val * 100).toFixed(1) + '%';
+        }
+
+        function sniff(targetBush) {
+            // 記錄探測前的先驗機率供顯示
+            const priorStr = `A: ${formatPct(bayesProbs[0])}, B: ${formatPct(bayesProbs[1])}, C: ${formatPct(bayesProbs[2])}`;
+            document.getElementById('expl-prior').innerText = priorStr;
+
+            // 產生感測器結果
+            let sensorRings = (meatLoc === targetBush) 
+                ? (Math.random() < truePos) 
+                : (Math.random() < falsePos);
+
+            const bushName = ['A', 'B', 'C'][targetBush];
+            let msg = `探測草叢 ${bushName}... 雷達<span class="${sensorRings ? 'text-red-500' : 'text-blue-500'}">${sensorRings ? '嗶嗶大響🚨' : '沒有反應🔇'}</span>！`;
+            document.getElementById('bayes-message').innerHTML = msg;
+
+            // 顯示證據與概似度解說
+            document.getElementById('expl-evidence-text').innerHTML = `探測 <strong class="text-purple-600">${bushName}</strong> 草叢，並且雷達 <strong class="${sensorRings ? 'text-red-500' : 'text-blue-500'}">${sensorRings ? '響了！' : '沒響。'}</strong>`;
+            
+            if (sensorRings) {
+                document.getElementById('expl-lh-target').innerHTML = `若肉在 <strong>${bushName}</strong>，雷達響的機率是 <strong>80%</strong>`;
+                document.getElementById('expl-lh-other').innerHTML = `若肉不在 <strong>${bushName}</strong>，雷達誤響機率是 <strong>20%</strong>`;
+            } else {
+                document.getElementById('expl-lh-target').innerHTML = `若肉在 <strong>${bushName}</strong>，雷達沒響機率是 <strong>20%</strong>`;
+                document.getElementById('expl-lh-other').innerHTML = `若肉不在 <strong>${bushName}</strong>，雷達沒響機率是 <strong>80%</strong>`;
+            }
+
+            let unnormalized = [0, 0, 0];
+            let numStrings = []; // 儲存 Step 3 的分子算式
+            let bushNames = ['A', 'B', 'C'];
+            
+            for(let i=0; i<3; i++) {
+                let prior = bayesProbs[i];
+                let likelihood = sensorRings 
+                    ? ((i === targetBush) ? truePos : falsePos)
+                    : ((i === targetBush) ? (1 - truePos) : (1 - falsePos));
+                unnormalized[i] = prior * likelihood;
+                
+                // 產生 Step 3 的算式： 先驗 x 概似度 = 分子
+                numStrings.push(`${bushNames[i]}: ${formatPct(prior)} × ${formatPct(likelihood)} = <span class="text-gray-800 font-bold">${formatPct(unnormalized[i])}</span>`);
+            }
+            document.getElementById('expl-numerators').innerHTML = numStrings.join('<br>');
+
+            let sum = unnormalized.reduce((a, b) => a + b, 0);
+            
+            // 產生 Step 4 的分母字串
+            let sumStr = unnormalized.map(v => formatPct(v)).join(' + ');
+            document.getElementById('expl-denominator').innerHTML = `分母(總和) = ${sumStr} = <span class="font-bold text-gray-700">${formatPct(sum)}</span>`;
+            
+            // 計算最終機率與 Step 4 的字串
+            let postStrings = [];
+            for(let i=0; i<3; i++) {
+                bayesProbs[i] = unnormalized[i] / sum;
+                // 產生： 26.7% ÷ 40.0% = 66.7%
+                postStrings.push(`${bushNames[i]}: ${formatPct(unnormalized[i])} ÷ ${formatPct(sum)} = <strong class="text-purple-600 text-sm">${formatPct(bayesProbs[i])}</strong>`);
+            }
+            
+            // 記錄更新後的機率供顯示
+            document.getElementById('expl-posterior').innerHTML = postStrings.join('<br>');
+            
+            // 顯示解密區塊
+            document.getElementById('bayes-explanation').classList.remove('hidden');
+
+            updateBayesUI();
+        }
+
+        function openBushes() {
+            for(let i=0; i<3; i++) {
+                const resDiv = document.getElementById(`result-${i}`);
+                resDiv.classList.remove('hidden');
+                if (i === meatLoc) {
+                    resDiv.innerHTML = "🍖 在這裡！";
+                    resDiv.classList.add('text-green-600', 'font-black');
+                    resDiv.classList.remove('text-red-500');
+                } else {
+                    resDiv.innerHTML = "❌ 空的";
+                    resDiv.classList.add('text-red-500');
+                    resDiv.classList.remove('text-green-600', 'font-black');
+                }
+            }
+            document.getElementById('bayes-message').innerHTML = "遊戲結束！重置機率再來一次吧！";
+            document.getElementById('bayes-explanation').classList.add('hidden');
+        }
+
+        function resetBayes() {
+            meatLoc = Math.floor(Math.random() * 3);
+            bayesProbs = [1/3, 1/3, 1/3];
+            document.getElementById('bayes-message').innerHTML = "肉重新藏好了，請開始探測！";
+            document.getElementById('bayes-explanation').classList.add('hidden');
+            
+            for(let i=0; i<3; i++) {
+                const resDiv = document.getElementById(`result-${i}`);
+                resDiv.classList.add('hidden');
+                resDiv.classList.remove('text-green-600', 'text-red-500', 'font-black');
+            }
+            updateBayesUI();
+        }
+        updateBayesUI();
+
+        // ==========================================
+        // 5. Quiz Logic
+        // ==========================================
+        function checkQuiz(btn, type, isCorrect = false) {
+            const parent = btn.closest('.quiz-item');
+            const buttons = parent.querySelectorAll('button');
+            const feedback = parent.querySelector('.quiz-feedback');
+            
+            // Disable all buttons in this question
+            buttons.forEach(b => {
+                b.disabled = true;
+                b.classList.remove('hover:bg-gray-200');
+            });
+
+            feedback.classList.remove('hidden', 'text-green-600', 'text-red-500');
+            
+            if (isCorrect) {
+                btn.classList.replace('bg-gray-100', 'bg-green-500');
+                btn.classList.add('text-white');
+                feedback.classList.add('text-green-600');
+                feedback.innerHTML = '<i class="fa-solid fa-check-circle mr-1"></i> 答對了！這正是該模型的典型應用。';
+            } else {
+                btn.classList.replace('bg-gray-100', 'bg-red-500');
+                btn.classList.add('text-white');
+                feedback.classList.add('text-red-500');
+                
+                // Show the correct one
+                buttons.forEach(b => {
+                    if (b.getAttribute('onclick').includes('true')) {
+                        b.classList.replace('bg-gray-100', 'bg-green-100');
+                        b.classList.add('border-2', 'border-green-500', 'text-green-700');
+                    }
+                });
+                
+                feedback.innerHTML = '<i class="fa-solid fa-xmark-circle mr-1"></i> 答錯囉！請參考綠色框框的正確答案。';
+            }
+        }
+    </script>
+</body>
+</html>
