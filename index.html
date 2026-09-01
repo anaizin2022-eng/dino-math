@@ -184,9 +184,7 @@
             <div class="p-6 md:p-8">
                 <h3 class="text-xl font-bold text-gray-800 mb-3"><i class="fa-solid fa-book-open text-blue-500 mr-2"></i>核心精神：用「隨機」解決「確定」的問題</h3>
                 <p class="text-gray-700 mb-4 leading-relaxed">
-                    蒙地卡羅方法（Monte Carlo Method）是一類依靠<strong>重複隨機抽樣</strong>來獲得數值結果的計算演算法。<comment-tag id="2">當問題過於複雜，無法用解析解（Analytical Solution，即直接套公式）求得精確答案時，我們就會透過大量模擬來逼近真實值。</comment-tag id="2" text="當直接計算某個數值、積分、期望值或機率分布非常困難或成本太高時，可以透過隨機抽樣與大量模擬來取得近似結果。
-
-這個修改讓定義更加專業，並清楚點出蒙地卡羅方法能夠解決的具體數學難題。" type="suggestion">
+                    蒙地卡羅方法（Monte Carlo Method）是一類依靠<strong>重複隨機抽樣</strong>來獲得數值結果的計算演算法。當問題過於複雜，無法用解析解（Analytical Solution，即直接套公式）求得精確答案時，我們就會透過大量模擬來逼近真實值。
                 </p>
                 <div class="bg-blue-50 p-6 rounded-xl border border-blue-100 mb-4">
                     <h4 class="font-bold text-blue-800 mb-2">數學定義與大數法則</h4>
@@ -461,7 +459,7 @@
                             <div class="flex items-start gap-2">
                                 <div class="bg-red-200 text-red-800 font-bold px-2 py-1 rounded text-xs">Step 4</div>
                                 <div class="w-full">
-                                    <span class="font-bold text-gray-800">更新機率 (Posterior)</span>：除以分母，調整比例讓總和為 100%<br>
+                                    <comment-tag id="1"><span class="font-bold text-gray-800">更新機率 (Posterior)</span></comment-tag id="1" text="改為「後驗機率 (Posterior)」，這樣更符合正式的統計學名詞，有助於與考試中的專有名詞對齊。" type="suggestion">：除以分母，調整比例讓總和為 100%<br>
                                     <div id="expl-denominator" class="text-xs text-gray-500 italic mt-1">
                                         <!-- JS會填入 -->
                                     </div>
