@@ -127,7 +127,7 @@
                 小恐龍的機率大冒險
             </h1>
             <p class="text-xl text-gray-600 font-bold bg-white inline-block px-6 py-3 rounded-full shadow-md">
-                15張卡片 ✕ 互動遊戲 ✕ 考古題實戰 ＝ 輕鬆搞懂機器學習三大機率模型！
+                15張卡片 ✕ 互動遊戲 ✕ 考古題實戰 ＝ 輕鬆搞懂三種重要的機率方法與模型
             </p>
         </header>
 
@@ -184,7 +184,9 @@
             <div class="p-6 md:p-8">
                 <h3 class="text-xl font-bold text-gray-800 mb-3"><i class="fa-solid fa-book-open text-blue-500 mr-2"></i>核心精神：用「隨機」解決「確定」的問題</h3>
                 <p class="text-gray-700 mb-4 leading-relaxed">
-                    蒙地卡羅方法（Monte Carlo Method）是一類依靠<strong>重複隨機抽樣</strong>來獲得數值結果的計算演算法。當問題過於複雜，無法用解析解（Analytical Solution，即直接套公式）求得精確答案時，我們就會透過大量模擬來逼近真實值。
+                    蒙地卡羅方法（Monte Carlo Method）是一類依靠<strong>重複隨機抽樣</strong>來獲得數值結果的計算演算法。<comment-tag id="2">當問題過於複雜，無法用解析解（Analytical Solution，即直接套公式）求得精確答案時，我們就會透過大量模擬來逼近真實值。</comment-tag id="2" text="當直接計算某個數值、積分、期望值或機率分布非常困難或成本太高時，可以透過隨機抽樣與大量模擬來取得近似結果。
+
+這個修改讓定義更加專業，並清楚點出蒙地卡羅方法能夠解決的具體數學難題。" type="suggestion">
                 </p>
                 <div class="bg-blue-50 p-6 rounded-xl border border-blue-100 mb-4">
                     <h4 class="font-bold text-blue-800 mb-2">數學定義與大數法則</h4>
@@ -410,7 +412,7 @@
                     
                     <p class="text-gray-700 mb-4 text-sm leading-relaxed">
                         目標：找出大肉腿 🍖。初始每個草叢機率都是 33.3%。<br>
-                        你可以使用<strong>「嗅覺雷達」</strong>探測草叢。雷達有 <strong>80% 準確率</strong> (有肉會響；沒肉20%機率誤報)。每探測一次，機率就會根據貝氏定理「更新」！
+                        你可以使用<strong>「嗅覺雷達」</strong>探測草叢。雷達的偵測率為 80%，且誤報率為 20%。每探測一次，機率就會根據貝氏定理「更新」！
                     </p>
 
                     <div class="flex gap-4 mb-4">
@@ -639,28 +641,28 @@
                     </thead>
                     <tbody class="text-sm">
                         <tr>
-                            <td class="p-3 border-b border-gray-200 font-bold text-gray-700">核心一句話</td>
-                            <td class="p-3 border-b border-gray-200 bg-blue-50/50">「丟大量亂數，看結果統計」</td>
-                            <td class="p-3 border-b border-gray-200 bg-amber-50/50">「下一秒去哪，只看這一秒」</td>
-                            <td class="p-3 border-b border-gray-200 bg-purple-50/50">「有了新證據，更新舊觀念」</td>
+                            <td class="p-3 border-b border-gray-200 font-bold text-gray-700">它是什麼？</td>
+                            <td class="p-3 border-b border-gray-200 bg-blue-50/50">隨機模擬／數值計算方法</td>
+                            <td class="p-3 border-b border-gray-200 bg-amber-50/50">隨機過程／機率模型</td>
+                            <td class="p-3 border-b border-gray-200 bg-purple-50/50">機率推論框架</td>
                         </tr>
                         <tr>
-                            <td class="p-3 border-b border-gray-200 font-bold text-gray-700">主要處理什麼？</td>
-                            <td class="p-3 border-b border-gray-200">難以精算積分的<strong>複雜系統與期望值</strong></td>
-                            <td class="p-3 border-b border-gray-200">隨時間變化的<strong>序列狀態轉移</strong></td>
-                            <td class="p-3 border-b border-gray-200">充滿不確定性的<strong>逆向機率與信念更新</strong></td>
+                            <td class="p-3 border-b border-gray-200 font-bold text-gray-700">核心問題</td>
+                            <td class="p-3 border-b border-gray-200">很難直接算 → 怎麼估？</td>
+                            <td class="p-3 border-b border-gray-200">狀態會怎麼變？</td>
+                            <td class="p-3 border-b border-gray-200">有新證據 → 信念怎麼更新？</td>
                         </tr>
                         <tr>
-                            <td class="p-3 border-b border-gray-200 font-bold text-gray-700">關鍵字 (考題常見)</td>
-                            <td class="p-3 border-b border-gray-200 font-mono text-xs text-blue-600">隨機抽樣, 模擬, 近似, 大數法則</td>
-                            <td class="p-3 border-b border-gray-200 font-mono text-xs text-amber-600">無記憶性, 狀態轉移, 穩態矩陣</td>
-                            <td class="p-3 border-b border-gray-200 font-mono text-xs text-purple-600">先驗機率, 後驗機率, 條件機率, 證據</td>
+                            <td class="p-3 border-b border-gray-200 font-bold text-gray-700">關鍵字</td>
+                            <td class="p-3 border-b border-gray-200 font-mono text-xs text-blue-600">隨機抽樣、模擬、近似、大數法則</td>
+                            <td class="p-3 border-b border-gray-200 font-mono text-xs text-amber-600">狀態、轉移、馬可夫性、穩態</td>
+                            <td class="p-3 border-b border-gray-200 font-mono text-xs text-purple-600">先驗、概似、後驗、證據</td>
                         </tr>
                         <tr>
-                            <td class="p-3 font-bold text-gray-700">經典應用場景</td>
-                            <td class="p-3 bg-blue-50/50">金融 VaR 風險評估、AlphaGo 走子模擬 (MCTS)</td>
-                            <td class="p-3 bg-amber-50/50">PageRank 網頁排序、天氣狀態預測</td>
-                            <td class="p-3 bg-purple-50/50">垃圾信件過濾、醫療疾病確診率評估</td>
+                            <td class="p-3 font-bold text-gray-700">典型問題</td>
+                            <td class="p-3 bg-blue-50/50">π、積分、風險模擬</td>
+                            <td class="p-3 bg-amber-50/50">天氣、網頁跳轉、狀態序列</td>
+                            <td class="p-3 bg-purple-50/50">醫療診斷、垃圾郵件、分類</td>
                         </tr>
                     </tbody>
                 </table>
@@ -722,7 +724,7 @@
                     你已經成功掌握了機器學習中三個最難懂但也最重要的機率模型。不論是遇到蒙地卡羅的隨機性、馬可夫鏈的無記憶性，還是貝氏推論的條件機率，你都能游刃有餘地面對！
                 </p>
                 <div class="bg-white/20 p-4 rounded-xl inline-block backdrop-blur-sm border border-white/30 shadow-lg">
-                    <p class="font-bold text-xl tracking-wider">AI 應用規劃師中級能力鑑定 證書 Get <i class="fa-solid fa-check-circle text-green-200 ml-1"></i></p>
+                    <p class="font-bold text-xl tracking-wider">AI 應用規劃師中級能力鑑定 證書 Get ✔️</p>
                 </div>
                 <div class="mt-8">
                     <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="bg-white text-green-700 hover:bg-gray-100 font-bold py-3 px-8 rounded-full shadow-md transition-transform transform hover:-translate-y-1">
