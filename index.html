@@ -144,9 +144,9 @@
             <div class="p-6 md:p-8 flex flex-col md:flex-row gap-8">
                 <div class="flex-1">
                     <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg mb-6 text-sm text-blue-800 shadow-sm">
-                        <strong>小恐龍語錄：</strong>「我數學不好，不會算圓形的面積。但我只要閉著眼睛一直丟石頭，看有幾顆砸中圓形肉餅，用比例猜一下就知道它有多大啦！」
+                        <strong>小恐龍語錄：</strong>「我數學不好，不知道這塊圓形肉餅有多大。但我只要把它放在正方形盤子上，閉著眼睛一直丟石頭，看有幾顆砸中肉餅，用比例猜一下就知道它有多大啦！」
                     </div>
-                    <p class="text-gray-700 mb-4 leading-relaxed">我們要在一個面積為 4 的正方形中，畫一個面積為 π 的圓形。隨機投入飛鏢，<span class="text-red-500 font-bold">落在圓內</span>的機率會接近 $\frac{\pi}{4}$。試著丟越多次，看看估算出的圓周率會不會越準！</p>
+                    <p class="text-gray-700 mb-4 leading-relaxed">小恐龍把一塊未知的圓形肉餅放進一個面積為 4 的正方形大盤子中。我們隨機投入飛鏢，<span class="text-red-500 font-bold">落在肉餅（圓內）</span>的機率，會接近肉餅面積佔整個盤子的比例。藉由這個方式，我們就能估算出肉餅的真實面積（也就是神奇的圓周率 $\pi$）！長期下來會逐漸穩定；誤差約以 $1/\sqrt{N}$ 縮小，也就是說想讓誤差減半，需要四倍的樣本數喔！</p>
                     
                     <div class="flex flex-wrap gap-2 mb-6">
                         <button onclick="throwDarts(10)" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors">丟 10 顆</button>
@@ -184,7 +184,7 @@
             <div class="p-6 md:p-8">
                 <h3 class="text-xl font-bold text-gray-800 mb-3"><i class="fa-solid fa-book-open text-blue-500 mr-2"></i>核心精神：用「隨機」解決「確定」的問題</h3>
                 <p class="text-gray-700 mb-4 leading-relaxed">
-                    蒙地卡羅方法（Monte Carlo Method）是一類依靠<strong>重複隨機抽樣</strong>來獲得數值結果的計算演算法。當問題過於複雜，無法用解析解（Analytical Solution，即直接套公式）求得精確答案時，我們就會透過大量模擬來逼近真實值。
+                    蒙地卡羅方法（Monte Carlo Method）是一類依靠<strong>重複隨機抽樣</strong>來獲得數值結果的計算演算法。算不出來才用蒙地卡羅！當直接計算太難、太貴時，我們就改用隨機抽樣來進行估計。
                 </p>
                 <div class="bg-blue-50 p-6 rounded-xl border border-blue-100 mb-4">
                     <h4 class="font-bold text-blue-800 mb-2">數學定義與大數法則</h4>
@@ -194,7 +194,7 @@
                     </div>
                     <p class="text-gray-600 text-sm mt-2"><i class="fa-solid fa-circle-info mr-1"></i> 根據<strong>大數法則 (Law of Large Numbers)</strong>，當抽樣次數 $N \to \infty$ 時，這個平均值會收斂到真實的期望值。</p>
                 </div>
-                <p class="text-gray-700 font-bold">常見應用：<span class="font-normal">金融風險評估、天氣預報模擬、強化學習中的狀態價值估算、複雜積分計算。</span></p>
+                <p class="text-gray-700 font-bold">常見應用：<span class="font-normal">金融風險評估、強化學習中的狀態價值估算、複雜積分計算。</span></p>
             </div>
         </section>
 
@@ -268,7 +268,8 @@
             <div class="p-6 md:p-8 flex flex-col md:flex-row gap-8">
                 <div class="flex-1">
                     <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg mb-6 text-sm text-amber-800 shadow-sm">
-                        <strong>小恐龍語錄：</strong>「我是一隻沒有記憶的恐龍！我明天要在哪裡醒來，完全只看我『今天』在哪裡，跟我昨天、前天在哪裡一點關係都沒有！」
+                        <p><strong>小恐龍語錄：</strong>「我是一隻沒有記憶的恐龍！我明天要在哪裡醒來，完全只看我『今天』在哪裡，跟我昨天、前天在哪裡一點關係都沒有！」</p>
+                        <p class="mt-2 pt-2 border-t border-amber-200 text-xs font-bold text-amber-700">💡 正式定義補帖：沒有記憶是個生動的梗，但嚴謹的定義是「在知道現在狀態之後，過去的狀態不再提供額外的資訊」。</p>
                     </div>
                     
                     <p class="text-gray-700 mb-4 leading-relaxed">
@@ -359,7 +360,7 @@
                         $$ P = \begin{bmatrix} 0.3 & 0.7 \\ 0.6 & 0.4 \end{bmatrix} $$
                     </div>
                 </div>
-                <p class="text-gray-700 font-bold">常見應用：<span class="font-normal">Google 網頁排序 (PageRank)、文字生成模型 (N-gram)、語音辨識 (HMM)、棋盤遊戲分析。</span></p>
+                <p class="text-gray-700 font-bold">常見應用：<span class="font-normal">Google 網頁排序 (PageRank)、文字生成模型 (N-gram)、棋盤遊戲分析，以及語音辨識（HMM 是「以馬可夫鏈當作隱藏狀態轉移基礎」的模型，不完全等於馬可夫鏈）。</span></p>
             </div>
         </section>
 
@@ -652,7 +653,7 @@
                         </tr>
                         <tr>
                             <td class="p-3 border-b border-gray-200 font-bold text-gray-700">關鍵字</td>
-                            <td class="p-3 border-b border-gray-200 font-mono text-xs text-blue-600">隨機抽樣、模擬、近似、大數法則</td>
+                            <td class="p-3 border-b border-gray-200 font-mono text-xs text-blue-600">隨機抽樣、模擬、近似、期望值</td>
                             <td class="p-3 border-b border-gray-200 font-mono text-xs text-amber-600">狀態、轉移、馬可夫性、穩態</td>
                             <td class="p-3 border-b border-gray-200 font-mono text-xs text-purple-600">先驗、概似、後驗、證據</td>
                         </tr>
